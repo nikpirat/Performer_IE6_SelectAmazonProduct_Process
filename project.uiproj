@@ -1,0 +1,6 @@
+{
+  "Name": "Performer_IE6_SelectAmazonProduct_Process",
+  "ProjectType": "Process",
+  "Description": "Retrieves keywords from the Queue, applying amazon product search and scrapes all items to excel",
+  "MainFile": "Main.xaml"
+}
