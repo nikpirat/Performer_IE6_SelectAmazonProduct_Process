@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="SearchProduct" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="SearchProduct" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="out_SearchSuccess" Type="OutArgument(x:Boolean)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
@@ -232,126 +232,148 @@
       <AssemblyReference>System.Net.NetworkInformation</AssemblyReference>
       <AssemblyReference>System.Net.Ping</AssemblyReference>
       <AssemblyReference>System.Net.Sockets</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable2</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable3</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable4</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>Studio.Generated.TypedDataTable1</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Main Sequence:&#xA;&#xA;Display Name: Search Amazon for Keyword&#xA;Add activities:A. Log Message&#xA;&#xA;Display Name: Log - Start Product Search&#xA;Level: Info&#xA;Message: &quot;[Search Product] Starting search for keyword: &quot; + in_Keyword&#xA;B. Try Catch&#xA;&#xA;Display Name: Try Catch - Execute Search&#xA;In Try block:&#xA;Invoke Workflow File (UI Library - Search Bar)&#xA;&#xA;Display Name: Invoke - Type Search Keyword&#xA;Workflow Path: Browse to Amazon.UILibrary → Amazon_SearchBar.xaml&#xA;Or enter: Amazon.UILibrary\Amazon_SearchBar.xaml&#xA;&#xA;&#xA;Import Arguments:&#xA;&#xA;Click Import Arguments button&#xA;Map arguments:&#xA;&#xA;in_SearchText → in_Keyword&#xA;in_Browser → in_Browser&#xA;in_MaxRetries → 3&#xA;out_Success → Create variable: TypeSuccess (Boolean)&#xA;&#xA;&#xA;&#xA;If condition&#xA;&#xA;Display Name: If Type Failed - Throw Exception&#xA;Condition: Not TypeSuccess&#xA;&#xA;&#xA;Then:a. Log Message&#xA;- Level: Error&#xA;- Message: &quot;[Search Product] Failed to type search keyword into search bar&quot;b. Throw&#xA;- Display Name: Throw System Exception&#xA;- Exception: New System.Exception(&quot;Failed to type in Amazon search bar&quot;)&#xA;Delay&#xA;&#xA;Display Name: Wait After Typing&#xA;Duration: 00:00:01&#xA;&#xA;&#xA;&#xA;Invoke Workflow File (UI Library - Click Search)&#xA;&#xA;Display Name: Invoke - Click Search Button&#xA;Workflow Path: Amazon.UILibrary\Amazon_ClickSearch.xaml&#xA;&#xA;&#xA;Import Arguments:&#xA;&#xA;in_Browser → in_Browser&#xA;in_MaxRetries → 3&#xA;out_Success → Create variable: ClickSuccess (Boolean)&#xA;&#xA;If condition&#xA;&#xA;Display Name: If Click Failed - Throw Exception&#xA;Condition: Not ClickSuccess&#xA;&#xA;&#xA;Then:a. Throw&#xA;- Exception: New System.Exception(&quot;Failed to click Amazon search button&quot;)&#xA;Delay (Wait for search results page)&#xA;&#xA;Display Name: Wait for Results Page Load&#xA;Duration: 00:00:03&#xA;&#xA;&#xA;&#xA;Assign&#xA;&#xA;Display Name: Set Search Success True&#xA;To: out_SearchSuccess&#xA;Value: TypeSuccess AndAlso ClickSuccess&#xA;&#xA;&#xA;&#xA;Log Message&#xA;&#xA;Display Name: Log - Search Completed&#xA;Level: Info&#xA;Message: &quot;[Search Product] Search completed successfully for: &quot; + in_Keyword&#xA;&#xA;&#xA;In Catch block:Add Catch for System.Exception:&#xA;Assign&#xA;&#xA;To: out_SearchSuccess&#xA;Value: False&#xA;&#xA;&#xA;&#xA;Log Message&#xA;&#xA;Level: Error&#xA;Message: &quot;[Search Product] Search failed: &quot; + exception.Message&#xA;&#xA;&#xA;&#xA;Rethrow&#xA;Variables needed (created during build):&#xA;&#xA;TypeSuccess (Boolean, Sequence scope)&#xA;ClickSuccess (Boolean, Sequence scope)" DisplayName="SearchProduct" sap:VirtualizedContainerService.HintSize="951.6,2796.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="SearchProduct" sap:VirtualizedContainerService.HintSize="885.2,1504" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="544.8,2696" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="449.6,1449.6" sap2010:WorkflowViewState.IdRef="Sequence_10">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Boolean" Name="bln_TypeSuccess" />
+        <Variable x:TypeArguments="x:Boolean" Name="bln_ClickSuccess" />
+        <Variable x:TypeArguments="x:Boolean" Name="bln_NoResults" />
+      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log - Start Product Search" sap:VirtualizedContainerService.HintSize="511.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;[Search Product] Starting search for keyword: &quot; &amp; in_Keyword]" />
-      <TryCatch DisplayName="Try Catch - Execute Search" sap:VirtualizedContainerService.HintSize="511.2,2407.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-        <TryCatch.Try>
-          <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="509.6,2049.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:Boolean" Name="TypeSuccess" />
-            </Sequence.Variables>
+      <ui:LogMessage DisplayName="Log the search keyword." sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[String.Format(&quot;[SearchProduct] Searching for: {0}&quot;, in_Keyword)]" />
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to type the search keyword into the Amazon search bar." sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_SearchBar.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_SearchText">[in_Keyword]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[CInt(in_Config("MaxRetryNumber"))]</InArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Success ">[bln_TypeSuccess]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <If Condition="[Not bln_TypeSuccess]" DisplayName="If typing the keyword into the search bar fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="416,56.8" sap2010:WorkflowViewState.IdRef="If_3">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,348" sap2010:WorkflowViewState.IdRef="Sequence_11">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke - Type Search Keyword" sap:VirtualizedContainerService.HintSize="476,184.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_SearchBar.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_SearchText">[in_Keyword]</InArgument>
-                <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
-                <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[3]</InArgument>
-                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Success ">[TypeSuccess]</OutArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-            <If Condition="[Not TypeSuccess]" DisplayName="If Type Failed - Throw Exception" sap:VirtualizedContainerService.HintSize="476,596.8" sap2010:WorkflowViewState.IdRef="If_2">
-              <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,360" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log an error message because typing the search keyword failed." sap:VirtualizedContainerService.HintSize="416,178.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="[&quot;[Search Product] Failed to type search keyword into search bar&quot;]" />
-                  <Throw DisplayName="Throw a system exception as typing in the search bar failed." Exception="[New Exception(&quot;Failed to type in Amazon search bar&quot;)]" sap:VirtualizedContainerService.HintSize="416,117.6" sap2010:WorkflowViewState.IdRef="Throw_2" />
-                </Sequence>
-              </If.Then>
-              <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,94.4" sap2010:WorkflowViewState.IdRef="Sequence_6">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Sequence>
-              </If.Else>
-            </If>
-            <Delay DisplayName="Introduce a delay after typing the keyword." Duration="00:00:01" sap:VirtualizedContainerService.HintSize="476,126.4" sap2010:WorkflowViewState.IdRef="Delay_2" />
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke another sub-workflow to click the Amazon search button, passing the browser and max retries, and capturing the success status." sap:VirtualizedContainerService.HintSize="476,184.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_ClickSearch.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <scg:Dictionary x:TypeArguments="x:String, Argument" />
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-            <If DisplayName="If the clicking operation was not successful, throw a System.Exception." sap:VirtualizedContainerService.HintSize="476,418.4" sap2010:WorkflowViewState.IdRef="If_1">
-              <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="474.4,181.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <Throw DisplayName="Throw a system exception as clicking the search button failed." Exception="[New Exception(&quot;Failed to click Amazon search button&quot;)]" sap:VirtualizedContainerService.HintSize="440.8,117.6" sap2010:WorkflowViewState.IdRef="Throw_1" />
-                </Sequence>
-              </If.Then>
-              <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="474.4,94.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Sequence>
-              </If.Else>
-            </If>
-            <Delay DisplayName="Introduce a delay to wait for the search results page to load." Duration="00:00:03" sap:VirtualizedContainerService.HintSize="476,126.4" sap2010:WorkflowViewState.IdRef="Delay_1" />
-            <Assign DisplayName="Assign the overall search success status based on the success of both typing and clicking." sap:VirtualizedContainerService.HintSize="476,178.4" sap2010:WorkflowViewState.IdRef="Assign_1">
-              <Assign.To>
-                <OutArgument x:TypeArguments="x:Boolean">[out_SearchSuccess]</OutArgument>
-              </Assign.To>
-            </Assign>
-            <ui:LogMessage DisplayName="Log a message indicating that the search completed successfully." sap:VirtualizedContainerService.HintSize="476,169.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[Search Product] Search completed successfully for: &quot; &amp; in_Keyword]" />
+            <ui:LogMessage DisplayName="Log an error message indicating the failure to type the keyword." sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;[SearchAndValidateResults] Failed to type keyword into search bar&quot;]" />
+            <Throw DisplayName="Throw an exception to halt the process due to the typing failure." Exception="[New Exception(&quot;Failed to type in Amazon search bar for keyword: &quot; &amp; in_Keyword)]" sap:VirtualizedContainerService.HintSize="416,113.6" sap2010:WorkflowViewState.IdRef="Throw_3" />
           </Sequence>
-        </TryCatch.Try>
-        <TryCatch.Catches>
-          <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-            <ActivityAction x:TypeArguments="s:Exception">
-              <ActivityAction.Argument>
-                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-              </ActivityAction.Argument>
-              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="509.6,94.4" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-              </Sequence>
-            </ActivityAction>
-          </Catch>
-        </TryCatch.Catches>
-        <TryCatch.Finally>
-          <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="509.6,94.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </Sequence>
-        </TryCatch.Finally>
-      </TryCatch>
+        </If.Else>
+      </If>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to click the Amazon search button." sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_ClickSearch.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[CInt(in_Config("MaxRetryNumber"))]</InArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Success">[bln_ClickSuccess]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <If Condition="[Not bln_ClickSuccess]" DisplayName="If clicking the search button fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="416,56.8" sap2010:WorkflowViewState.IdRef="If_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,348" sap2010:WorkflowViewState.IdRef="Sequence_13">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log an error message indicating the failure to click the search button." sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Error" Message="[&quot;[SearchAndValidateResults] Failed to click search button&quot;]" />
+            <Throw DisplayName="Throw an exception to halt the process due to the click failure." Exception="[New Exception(&quot;Failed to click Amazon search button&quot;)]" sap:VirtualizedContainerService.HintSize="416,113.6" sap2010:WorkflowViewState.IdRef="Throw_4" />
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+      <Delay DisplayName="Wait for the search results page to load." Duration="00:00:03" sap:VirtualizedContainerService.HintSize="416,122.4" sap2010:WorkflowViewState.IdRef="Delay_3" />
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to check if no results were found on Amazon." sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_CheckNoResults.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_NoResults">[bln_NoResults]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <If Condition="[bln_NoResults]" DisplayName="If no results are found, then log a warning and throw a business rule exception." sap:VirtualizedContainerService.HintSize="416,56.8" sap2010:WorkflowViewState.IdRef="If_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,348" sap2010:WorkflowViewState.IdRef="Sequence_15">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log a warning that no results were found for the keyword." sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Warn" Message="[String.Format(&quot;[SearchAndValidateResults] No results found for: {0}&quot;, in_Keyword)]" />
+            <Throw DisplayName="Throw a business rule exception because no search results were found." Exception="[New UiPath.Core.BusinessRuleException(&quot;No search results found for keyword: &quot; &amp; in_Keyword)]" sap:VirtualizedContainerService.HintSize="416,113.6" sap2010:WorkflowViewState.IdRef="Throw_5" />
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_16">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+      <Assign DisplayName="Assign a variable to indicate that results were found." sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Boolean">[out_SearchSuccess]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log that the search was successful." sap:VirtualizedContainerService.HintSize="416,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[String.Format(&quot;[SearchAndValidateResults] Search successful, results found for: {0}&quot;, in_Keyword)]" />
     </Sequence>
   </Sequence>
 </Activity>
