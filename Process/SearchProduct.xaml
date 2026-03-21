@@ -239,14 +239,14 @@
       <AssemblyReference>Studio.Generated.TypedDataTable1</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="SearchProduct" sap:VirtualizedContainerService.HintSize="885.2,1504" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="SearchProduct" sap:VirtualizedContainerService.HintSize="885.2,2023.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="449.6,1449.6" sap2010:WorkflowViewState.IdRef="Sequence_10">
+    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="484.8,1968.8" sap2010:WorkflowViewState.IdRef="Sequence_10">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Boolean" Name="bln_TypeSuccess" />
         <Variable x:TypeArguments="x:Boolean" Name="bln_ClickSuccess" />
@@ -258,19 +258,19 @@
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log the search keyword." sap:VirtualizedContainerService.HintSize="416,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[String.Format(&quot;[SearchProduct] Searching for: {0}&quot;, in_Keyword)]" />
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to type the search keyword into the Amazon search bar." sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_SearchBar.xaml">
+      <ui:LogMessage DisplayName="Log the search keyword." sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[String.Format(&quot;[SearchProduct] Searching for: {0}&quot;, in_Keyword)]" />
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to type the search keyword into the Amazon search bar." sap:VirtualizedContainerService.HintSize="451.2,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_SearchBar.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_SearchText">[in_Keyword]</InArgument>
           <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[CInt(in_Config("MaxRetryNumber"))]</InArgument>
-          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Success ">[bln_TypeSuccess]</OutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_Success">[bln_TypeSuccess]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <If Condition="[Not bln_TypeSuccess]" DisplayName="If typing the keyword into the search bar fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="416,56.8" sap2010:WorkflowViewState.IdRef="If_3">
+      <If Condition="[Not bln_TypeSuccess]" DisplayName="If typing the keyword into the search bar fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="451.2,576" sap2010:WorkflowViewState.IdRef="If_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -295,7 +295,7 @@
           </Sequence>
         </If.Else>
       </If>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to click the Amazon search button." sap:VirtualizedContainerService.HintSize="416,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_ClickSearch.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a custom workflow to click the Amazon search button." sap:VirtualizedContainerService.HintSize="451.2,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Amazon.UILibrary\\Amazon_ClickSearch.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
           <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[CInt(in_Config("MaxRetryNumber"))]</InArgument>

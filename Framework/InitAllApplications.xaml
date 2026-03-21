@@ -1,6 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Initialize_Applications" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:ss="clr-namespace:System.Security;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="io_Browser" Type="InOutArgument(ui:Browser)" />
+    <x:Property Name="out_Browser" Type="OutArgument(ui:Browser)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
   </x:Members>
   <VisualBasic.Settings>
@@ -244,11 +244,13 @@
       <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Platform</AssemblyReference>
       <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Open applications used in the process and do necessary initialization procedures (e.g., login)." DisplayName="Initialize All Applications" sap:VirtualizedContainerService.HintSize="885.2,2260.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
+  <Sequence sap2010:Annotation.AnnotationText="Open applications used in the process and do necessary initialization procedures (e.g., login)." DisplayName="Initialize All Applications" sap:VirtualizedContainerService.HintSize="885.2,1712.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Boolean" Name="AlreadyLoggedIn" />
+      <Variable x:TypeArguments="ui:Browser" Name="Browser_Amazon" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -256,97 +258,101 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message (Initialize applications)" sap:VirtualizedContainerService.HintSize="484.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Opening applications...&quot;]" />
-    <Sequence sap2010:Annotation.AnnotationText="add io_Browser as an argument:&#xA;&#xA;Arguments panel → Add:&#xA;&#xA;Name: out_Browser, Direction: Out, Type: Browser&#xA;Name: in_Config, Direction: In, Type: Dictionary(String, Object) (already exists)&#xA;&#xA;&#xA;&#xA;Inside the Sequence, replace the Log Message with:&#xA;Step 1 — Log Message&#xA;&#xA;DisplayName: Log - Opening Amazon Browser&#xA;Level: Info&#xA;Message: &quot;[Init] Opening Amazon browser and navigating to homepage&quot;&#xA;&#xA;Step 2 — Open Browser&#xA;&#xA;Activity: Open Browser&#xA;DisplayName: Open Amazon Browser&#xA;URL: [in_Config(&quot;AmazonURL&quot;).ToString]&#xA;BrowserType: Chrome (or from config)&#xA;Output → Browser: create variable Browser_Amazon type Browser (Sequence scope — but you'll pass it out via out_Browser)&#xA;&#xA;Step 3 — Assign out_Browser&#xA;&#xA;To: out_Browser&#xA;Value: Browser_Amazon&#xA;&#xA;Step 4 — Invoke Login workflow&#xA;&#xA;DisplayName: Invoke - Login to Amazon&#xA;WorkflowFileName: Amazon.UILibrary\Amazon_Login.xaml&#xA;Arguments:&#xA;&#xA;in_Browser → Browser_Amazon&#xA;in_Username → in_Config(&quot;Amazon_Username&quot;).ToString&#xA;in_Password → DirectCast(in_Config(&quot;Amazon_Password&quot;), SecureString)&#xA;in_MaxRetries → 3&#xA;out_LoginSuccess → variable LoginSuccess (Boolean)&#xA;out_AlreadyLoggedIn → variable AlreadyLoggedIn (Boolean)&#xA;&#xA;&#xA;&#xA;Step 5 — If Login Failed&#xA;&#xA;Condition: Not LoginSuccess AndAlso Not AlreadyLoggedIn&#xA;Then: Throw New Exception(&quot;Amazon login failed during initialization&quot;)" sap:VirtualizedContainerService.HintSize="484.8,2032" sap2010:WorkflowViewState.IdRef="Sequence_10">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:Boolean" Name="LoginSuccess" />
-        <Variable x:TypeArguments="ui:Browser" Name="Browser_Amazon" />
-      </Sequence.Variables>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log a message indicating the start of the Amazon browser opening process." sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[Init] Opening Amazon browser and navigating to homepage&quot;]" />
-      <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Application/Browser" HealingAgentBehavior="Job" sap:VirtualizedContainerService.HintSize="451.2,220" sap2010:WorkflowViewState.IdRef="NApplicationCard_2" InUiElement="[io_Browser]" IsDisplayNameAuto="True" OpenMode="[UiPath.UIAutomationNext.Enums.NAppOpenMode.Never]" OutUiElement="[Browser_Amazon]" ScopeGuid="afe2be78-0eb9-44fd-8854-a5ddc1e39d8b" Version="V2">
-        <uix:NApplicationCard.Body>
-          <ActivityAction x:TypeArguments="x:Object">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
-            </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </Sequence>
-          </ActivityAction>
-        </uix:NApplicationCard.Body>
-        <uix:NApplicationCard.OCREngine>
-          <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
-            <ActivityFunc.Argument>
-              <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
-            </ActivityFunc.Argument>
-          </ActivityFunc>
-        </uix:NApplicationCard.OCREngine>
-        <uix:NApplicationCard.TargetApp>
-          <uix:TargetApp Area="0, 0, 0, 0" Url="[in_Config(&quot;AmazonURL&quot;).ToString]" Version="V2">
-            <uix:TargetApp.Arguments>
-              <InArgument x:TypeArguments="x:String" />
-            </uix:TargetApp.Arguments>
-            <uix:TargetApp.FilePath>
-              <InArgument x:TypeArguments="x:String" />
-            </uix:TargetApp.FilePath>
-            <uix:TargetApp.Selector>
-              <InArgument x:TypeArguments="x:String" />
-            </uix:TargetApp.Selector>
-            <uix:TargetApp.WorkingDirectory>
-              <InArgument x:TypeArguments="x:String" />
-            </uix:TargetApp.WorkingDirectory>
-          </uix:TargetApp>
-        </uix:NApplicationCard.TargetApp>
-      </uix:NApplicationCard>
-      <Assign DisplayName="Assign the opened browser instance to the workflow's output browser argument." sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
-        <Assign.To>
-          <OutArgument x:TypeArguments="ui:Browser">[io_Browser]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="ui:Browser">[Browser_Amazon]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke the Amazon login workflow, passing the browser instance, username, password, and max retries from the configuration, and receiving the login success and already logged in status." sap:VirtualizedContainerService.HintSize="451.2,174.4" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="[&quot;Amazon.UILibrary\Amazon_Login.xaml&quot;]">
-        <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[Browser_Amazon]</InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_Username">[in_Config("Amazon_Username").ToString]</InArgument>
-          <InArgument x:TypeArguments="ss:SecureString" x:Key="in_Password">[DirectCast(in_Config("Amazon_Password"), SecureString)]</InArgument>
-          <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[3]</InArgument>
-          <InArgument x:TypeArguments="x:Boolean" x:Key="out_LoginSuccess">[LoginSuccess]</InArgument>
-          <InArgument x:TypeArguments="x:Boolean" x:Key="out_AlreadyLoggedIn">[AlreadyLoggedIn]</InArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-      <If Condition="[Not LoginSuccess AndAlso Not AlreadyLoggedIn]" DisplayName="Check if the login was unsuccessful and the user was not already logged in." sap:VirtualizedContainerService.HintSize="451.2,392.8" sap2010:WorkflowViewState.IdRef="If_1">
-        <If.Then>
-          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,173.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <Throw DisplayName="If the login failed, throw an exception." Exception="[New Exception(&quot;Amazon login failed during initialization&quot;)]" sap:VirtualizedContainerService.HintSize="416,113.6" sap2010:WorkflowViewState.IdRef="Throw_1" />
-          </Sequence>
-        </If.Then>
-        <If.Else>
-          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_13">
+    <ui:LogMessage DisplayName="Log message (Initialize applications)" sap:VirtualizedContainerService.HintSize="632,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Opening applications...&quot;]" />
+    <ui:LogMessage DisplayName="Log a message indicating the start of the Amazon browser opening process." sap:VirtualizedContainerService.HintSize="632,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[Init] Opening Amazon browser and navigating to homepage&quot;]" />
+    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="[UiPath.UIAutomationNext.Enums.NAppCloseMode.Never]" DisplayName="Edge Amazon.co.uk Low Prices in Electronics," HealingAgentBehavior="Job" sap:VirtualizedContainerService.HintSize="632,292" sap2010:WorkflowViewState.IdRef="NApplicationCard_3" InteractionMode="DebuggerApi" OutUiElement="[Browser_Amazon]" ScopeGuid="7c8eb272-31f2-419e-9d31-f6dcaf05bd44" Version="V2">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_15">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </Sequence>
-        </If.Else>
-      </If>
-    </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument>
+        </ActivityFunc>
+      </uix:NApplicationCard.OCREngine>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="-9, -9, 1938, 1158" BrowserType="Edge" ContentHash="DWe5z7PjDEihBL2x9KV3FQ" IconBase64="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAF0SURBVDhPlZMxS8NAGIYD2vwBR80P0Knt7qTZRZr8A9u9Q3+ASIWCULG4ClnqUi10EWy7qx0cLKQuOrQpOGhJ1cGhr7y5XHokReoLR7jv3u/5vrvcaQB0ACcAhlhe9DJH1wAcx1cHgwFKpRJylgXLtuE4TtwiVSFgrEZ6vR5WUimsxgaBCzQmYKJG8oVCkLBrmnBdN5pvGIZqk5okAJ7nBV10Oh1cN5vBFmQXC5QEcP/pbDaxhaUBsiIh7OasVvsfQJqPyuVgfpDPRzHf91UrlQSkM5kogQep/hF2E1MI+PKiCA9w3TCCBH6ZlLNt7Jgmpu9jzFwHuC+KEQFaW8CHq5IXq7svEh8PgTpTJWDUBi414K4ITOfdJPQ5Al4aolhjjRHlDF6vBITjZltU6VeBpyrQPwW6e6IqfSzI9RAwv8pvD8JICM11DbPwi9YmMLwVvh9fjPAqVyKAFFt8vph3MGzHHVLBY+JzPgfwHV/9Q/QyR/8FZNBNQChmFy8AAAAASUVORK5CYII=" InformativeScreenshot="2988e53183197fd5f1d7ffd59b52780a.jpg" Reference="G0-hqtaD40qiqeo3539KMQ/V_HnUqPwyUaXT0WwkbazcA" Selector="&lt;html app='msedge.exe' title='Amazon.co.uk: Low Prices in Electronics, Books, Sports Equipment &amp;amp; more' /&gt;" Url="https://www.amazon.co.uk/ref=nav_logo" Version="V2">
+          <uix:TargetApp.Arguments>
+            <InArgument x:TypeArguments="x:String" />
+          </uix:TargetApp.Arguments>
+          <uix:TargetApp.WorkingDirectory>
+            <InArgument x:TypeArguments="x:String" />
+          </uix:TargetApp.WorkingDirectory>
+        </uix:TargetApp>
+      </uix:NApplicationCard.TargetApp>
+    </uix:NApplicationCard>
+    <Assign DisplayName="Assign the opened browser instance to the workflow's output browser argument." sap:VirtualizedContainerService.HintSize="632,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="ui:Browser">[out_Browser]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="ui:Browser">[Browser_Amazon]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="632,843.2" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="596.8,741.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="563.2,681.6" sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:Boolean" Name="LoginSuccess" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke the Amazon login workflow" sap:VirtualizedContainerService.HintSize="529.6,174.4" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="[&quot;Amazon.UILibrary\Amazon_Login.xaml&quot;]">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[Browser_Amazon]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Username">[in_Config("Amazon_Username").ToString]</InArgument>
+                <InArgument x:TypeArguments="ss:SecureString" x:Key="in_Password">[DirectCast(in_Config("Amazon_Password"), SecureString)]</InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxRetries">[3]</InArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_LoginSuccess">[LoginSuccess]</OutArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AlreadyLoggedIn">[AlreadyLoggedIn]</OutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <If Condition="[Not LoginSuccess AndAlso Not AlreadyLoggedIn]" DisplayName="Check if the login was unsuccessful and the user was not already logged in." sap:VirtualizedContainerService.HintSize="529.6,392.8" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="528,173.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Throw DisplayName="If the login failed, throw an exception." Exception="[New Exception(&quot;Amazon login failed during initialization&quot;)]" sap:VirtualizedContainerService.HintSize="494.4,113.6" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="528,89.6" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </Sequence>
+      </ui:CommentOut.Body>
+    </ui:CommentOut>
   </Sequence>
 </Activity>

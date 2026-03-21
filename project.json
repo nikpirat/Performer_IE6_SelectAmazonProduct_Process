@@ -4,7 +4,7 @@
   "description": "Retrieves keywords from the Queue, applying amazon product search and scrapes all items to excel",
   "main": "Main.xaml",
   "dependencies": {
-    "Amazon.UILibrary": "[1.0.5]",
+    "Amazon.UILibrary": "[1.0.10]",
     "UiPath.Excel.Activities": "[3.4.1]",
     "UiPath.Mail.Activities": "2.7.10",
     "UiPath.System.Activities": "[26.2.1]",

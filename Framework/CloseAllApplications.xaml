@@ -242,7 +242,7 @@
       <AssemblyReference>UiPath.Platform</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Do the necessary procedures for ending the process (e.g., logout) and close the used applications." DisplayName="Close All Applications" sap:VirtualizedContainerService.HintSize="885.2,1488.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence sap2010:Annotation.AnnotationText="Do the necessary procedures for ending the process (e.g., logout) and close the used applications." DisplayName="Close All Applications" sap:VirtualizedContainerService.HintSize="885.2,1118.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -250,24 +250,24 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log message (close applications)" sap:VirtualizedContainerService.HintSize="520,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Closing applications...&quot;]" />
-    <Sequence sap2010:Annotation.AnnotationText="Arguments needed: add in_Browser as InArgument(ui:Browser) in the Arguments panel.&#xA;&#xA;Open Framework/CloseAllApplications.xaml&#xA;Click Arguments tab → Add:&#xA;&#xA;Name: in_Browser, Direction: In, Type: Browser&#xA;&#xA;&#xA;Inside Sequence, after the existing Log Message:&#xA;Add If activity&#xA;&#xA;DisplayName: If Browser Is Open&#xA;Condition: in_Browser IsNot Nothing&#xA;&#xA;&#xA;In Then: add Close Tab activity (UiPath.Core.Activities)&#xA;&#xA;DisplayName: Close Browser&#xA;Browser: in_Browser&#xA;Wrap in Try Catch, catch Exception, log warn" sap:VirtualizedContainerService.HintSize="520,1260" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="520,889.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If Condition="[in_Browser isNot Nothing]" DisplayName="If the browser is open, try to close it." sap:VirtualizedContainerService.HintSize="486.4,821.6" sap2010:WorkflowViewState.IdRef="If_1">
+      <If Condition="[in_Browser isNot Nothing]" DisplayName="If the browser is open, try to close it." sap:VirtualizedContainerService.HintSize="486.4,775.2" sap2010:WorkflowViewState.IdRef="If_1">
         <If.Then>
-          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484.8,602.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484.8,556" sap2010:WorkflowViewState.IdRef="Sequence_8">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <TryCatch DisplayName="Try to close the browser and handle any potential errors." sap:VirtualizedContainerService.HintSize="451.2,542.4" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+            <TryCatch DisplayName="Try to close the browser and handle any potential errors." sap:VirtualizedContainerService.HintSize="451.2,496" sap2010:WorkflowViewState.IdRef="TryCatch_1">
               <TryCatch.Try>
-                <Sequence sap2010:Annotation.AnnotationText="add Close Tab activity (UiPath.Core.Activities)&#xA;&#xA;DisplayName: Close Browser&#xA;Browser: in_Browser" DisplayName="Try" sap:VirtualizedContainerService.HintSize="449.6,167.2" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Try" sap:VirtualizedContainerService.HintSize="449.6,120.8" sap2010:WorkflowViewState.IdRef="Sequence_4">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
