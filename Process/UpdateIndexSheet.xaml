@@ -1,10 +1,13 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="UpdateIndexSheet" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
+    <x:Property Name="out_FilePath" Type="OutArgument(x:String)" />
+    <x:Property Name="in_RequestID" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_Status" Type="InArgument(x:String)" />
     <x:Property Name="in_StartTime" Type="InArgument(s:DateTime)" />
     <x:Property Name="in_ProductCount" Type="InArgument(x:Int32)" />
     <x:Property Name="in_Keyword" Type="InArgument(x:String)" />
-    <x:Property Name="in_FilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_SheetNumber" Type="InArgument(x:Int32)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -251,16 +254,21 @@
       <AssemblyReference>System.Net.Ping</AssemblyReference>
       <AssemblyReference>System.Net.Sockets</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>Amazon.UILibrary_Studio.Generated.TypedDataTable1</AssemblyReference>
+      <AssemblyReference>Amazon.UILibrary_Studio.Generated.TypedDataTable2</AssemblyReference>
+      <AssemblyReference>Amazon.UILibrary_Studio.Generated.TypedDataTable3</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="UpdateIndexSheet" sap:VirtualizedContainerService.HintSize="885.2,3209.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="UpdateIndexSheet" sap:VirtualizedContainerService.HintSize="885.2,3595.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="646.4,3186.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="732.8,3572" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="str_FileName" />
+        <Variable x:TypeArguments="x:String" Name="str_OutputFolder" />
         <Variable x:TypeArguments="x:TimeSpan" Name="ts_Duration" />
         <Variable x:TypeArguments="x:String" Name="str_Duration" />
         <Variable x:TypeArguments="x:String" Name="str_Notes" />
@@ -272,64 +280,97 @@
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log an informational message about updating the index for a keyword." sap:VirtualizedContainerService.HintSize="612.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;[UpdateIndexSheet] Updating index for keyword: &quot; &amp; in_Keyword]" />
-      <Assign DisplayName="Calculate the duration by subtracting the start time from the current time." sap:VirtualizedContainerService.HintSize="612.8,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <ui:LogMessage DisplayName="Log an informational message about updating the index for a keyword." sap:VirtualizedContainerService.HintSize="699.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;[UpdateIndexSheet] Updating index for keyword: &quot; &amp; in_Keyword]" />
+      <Assign DisplayName="Assign the output folder path from a configuration setting." sap:VirtualizedContainerService.HintSize="699.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_5">
         <Assign.To>
-          <OutArgument x:TypeArguments="x:TimeSpan">[ts_Duration]</OutArgument>
+          <OutArgument x:TypeArguments="x:String">[str_OutputFolder]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="x:TimeSpan">[DateTime.Now.Subtract(in_StartTime)]</InArgument>
+          <InArgument x:TypeArguments="x:String">[in_Config("OutputFolderPath").ToString]</InArgument>
         </Assign.Value>
       </Assign>
-      <Assign DisplayName="Format the calculated duration into a string (hh:mm:ss)." sap:VirtualizedContainerService.HintSize="612.8,174.4" sap2010:WorkflowViewState.IdRef="Assign_2">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[str_Duration]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[ts_Duration.ToString("hh\:mm\:ss")]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Determine a note based on the product count: 'No products found' if the count is zero, otherwise an empty string." sap:VirtualizedContainerService.HintSize="612.8,174.4" sap2010:WorkflowViewState.IdRef="Assign_3">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[str_Notes]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(in_ProductCount = 0, "No products found", "")]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <TryCatch DisplayName="Attempt to read an existing Excel index sheet." sap:VirtualizedContainerService.HintSize="612.8,1469.6" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-        <TryCatch.Try>
-          <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="611.2,775.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <If Condition="[Not Directory.Exists(str_OutputFolder)]" DisplayName="Check if the assigned output folder exists. If it does not exist, create the folder." sap:VirtualizedContainerService.HintSize="699.2,401.6" sap2010:WorkflowViewState.IdRef="If_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="456,173.6" sap2010:WorkflowViewState.IdRef="Sequence_10">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="577.6,715.2" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
+            <ui:CreateDirectory ContinueOnError="{x:Null}" Output="{x:Null}" DisplayName="Create the output folder." sap:VirtualizedContainerService.HintSize="422.4,113.6" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[str_OutputFolder]" />
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="456,89.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+      <Assign DisplayName="Assign the full file name for the Excel output, combining the output folder and a request ID." sap:VirtualizedContainerService.HintSize="699.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_6">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_FileName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[System.IO.Path.Combine(str_OutputFolder, "ProductSearchResults_" &amp; in_RequestID &amp; ".xlsx")]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign DisplayName="Assign the constructed file path to an output variable." sap:VirtualizedContainerService.HintSize="699.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_7">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[out_FilePath]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[str_FileName]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <TryCatch DisplayName="Attempt to read an existing Excel index sheet." sap:VirtualizedContainerService.HintSize="699.2,1323.2" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <TryCatch.Try>
+          <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="520,628.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="486.4,568.8" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
               <ueab:ExcelProcessScopeX.Body>
                 <ActivityAction x:TypeArguments="ui:IExcelProcess">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="544,605.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="484.8,499.2" sap2010:WorkflowViewState.IdRef="Sequence_4">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" SensitivityLabel="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="510.4,545.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" SensitivityOperation="None" WorkbookPath="[in_FilePath]">
+                    <ueab:ExcelApplicationCard ReadFormatting="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="451.2,439.2" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" SensitivityOperation="None" WorkbookPath="[str_FileName]">
                       <ueab:ExcelApplicationCard.Body>
                         <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
                           <ActivityAction.Argument>
                             <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
                           </ActivityAction.Argument>
-                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476.8,252.8" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,220" sap2010:WorkflowViewState.IdRef="Sequence_5">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ueab:ReadRangeX DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="443.2,192.8" sap2010:WorkflowViewState.IdRef="ReadRangeX_1" Range="[Excel.SelectedSheet.Range(&quot;&quot;)]" SaveTo="[dt_Index]" />
+                            <ueab:ReadRangeX DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="416,160" sap2010:WorkflowViewState.IdRef="ReadRangeX_1" Range="[Excel.Sheet(&quot;Sheet1&quot;).Range(&quot;&quot;)]" SaveTo="[dt_Index]" />
                           </Sequence>
                         </ActivityAction>
                       </ueab:ExcelApplicationCard.Body>
@@ -337,6 +378,12 @@
                   </Sequence>
                 </ActivityAction>
               </ueab:ExcelProcessScopeX.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
             </ueab:ExcelProcessScopeX>
           </Sequence>
         </TryCatch.Try>
@@ -346,15 +393,15 @@
               <ActivityAction.Argument>
                 <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
               </ActivityAction.Argument>
-              <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Body" sap:VirtualizedContainerService.HintSize="611.2,431.2" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              <Sequence sap2010:Annotation.AnnotationText="" DisplayName="Body" sap:VirtualizedContainerService.HintSize="520,431.2" sap2010:WorkflowViewState.IdRef="Sequence_6">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log the specified warning message." sap:VirtualizedContainerService.HintSize="577.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;[UpdateIndexSheet] Index sheet not found, will create new&quot;]" />
-                <Assign DisplayName="Assign the value Nothing to the dt_Index variable." sap:VirtualizedContainerService.HintSize="577.6,165.6" sap2010:WorkflowViewState.IdRef="Assign_4">
+                <ui:LogMessage DisplayName="Log the specified warning message." sap:VirtualizedContainerService.HintSize="486.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;[UpdateIndexSheet] Index sheet not found, will create new&quot;]" />
+                <Assign DisplayName="Assign the value Nothing to the dt_Index variable." sap:VirtualizedContainerService.HintSize="486.4,165.6" sap2010:WorkflowViewState.IdRef="Assign_4">
                   <Assign.To>
                     <OutArgument x:TypeArguments="sd:DataTable">[dt_Index]</OutArgument>
                   </Assign.To>
@@ -367,7 +414,7 @@
           </Catch>
         </TryCatch.Catches>
         <TryCatch.Finally>
-          <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="611.2,89.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
+          <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="520,89.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -376,7 +423,7 @@
           </Sequence>
         </TryCatch.Finally>
       </TryCatch>
-      <If Condition="[dt_Index Is Nothing]" DisplayName="If the DataTable is empty or not found, build a new DataTable with predefined columns (Keyword, Total Products, Status, Processing Time, Notes)." sap:VirtualizedContainerService.HintSize="612.8,371.2" sap2010:WorkflowViewState.IdRef="If_1">
+      <If Condition="[dt_Index Is Nothing]" DisplayName="If the DataTable is empty or not found, build a new DataTable with predefined columns (Keyword, Total Products, Status, Processing Time, Notes)." sap:VirtualizedContainerService.HintSize="699.2,371.2" sap2010:WorkflowViewState.IdRef="If_1">
         <If.Then>
           <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="449.6,143.2" sap2010:WorkflowViewState.IdRef="Sequence_8">
             <sap:WorkflowViewStateService.ViewState>
@@ -384,7 +431,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:BuildDataTable DataTable="[dt_Index]" DisplayName="Build a new DataTable with predefined columns." sap:VirtualizedContainerService.HintSize="416,83.2" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;Table1&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;Table1&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Keyword&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;TotalProducts&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Status&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ProcessingTime&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Notes&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+            <ui:BuildDataTable DataTable="[dt_Index]" DisplayName="Build a new DataTable with predefined columns." sap:VirtualizedContainerService.HintSize="416,83.2" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;Table1&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;Table1&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Keyword&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Sheet&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Status&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
           </Sequence>
         </If.Then>
         <If.Else>
@@ -397,9 +444,9 @@
           </Sequence>
         </If.Else>
       </If>
-      <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_Keyword, in_ProductCount.ToString, in_Status, str_Duration, str_Notes}]" DataTable="[dt_Index]" DisplayName="Add a new row to the DataTable using the provided keyword, product count, status, duration, and notes." sap:VirtualizedContainerService.HintSize="612.8,220" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
-      <ui:WriteRange WorkbookPathResource="{x:Null}" DataTable="[dt_Index]" DisplayName="Write the updated DataTable back to the 'Index' sheet in the Excel workbook, starting at cell A1, including headers." sap:VirtualizedContainerService.HintSize="612.8,148" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Index" StartingCell="A1" WorkbookPath="[in_FilePath]" />
-      <ui:LogMessage DisplayName="Log a final informational message confirming the index update, including the status and duration." sap:VirtualizedContainerService.HintSize="612.8,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[UpdateIndexSheet] Index updated. Status: &quot; &amp; in_Status &amp; &quot; | Duration: &quot; &amp; str_Duration]" />
+      <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{in_Keyword, in_SheetNumber.ToString, in_Status}]" DataTable="[dt_Index]" DisplayName="Add a new row to the DataTable using the provided keyword, product count, status, duration, and notes." sap:VirtualizedContainerService.HintSize="699.2,220" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+      <ui:WriteRange DataTable="[dt_Index]" DisplayName="Write the updated DataTable back to the 'Index' sheet in the Excel workbook, starting at cell A1, including headers." sap:VirtualizedContainerService.HintSize="699.2,278.4" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="Sheet1" StartingCell="A1" WorkbookPath="[str_FileName]" />
+      <ui:LogMessage DisplayName="Log a final informational message confirming the index update, including the status and duration." sap:VirtualizedContainerService.HintSize="699.2,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[UpdateIndexSheet] Index updated. Status: &quot; &amp; in_Status &amp; &quot; | Duration: &quot; &amp; str_Duration]" />
     </Sequence>
   </Sequence>
 </Activity>

@@ -260,7 +260,7 @@
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log message (Initialize applications)" sap:VirtualizedContainerService.HintSize="632,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Opening applications...&quot;]" />
     <ui:LogMessage DisplayName="Log a message indicating the start of the Amazon browser opening process." sap:VirtualizedContainerService.HintSize="632,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[Init] Opening Amazon browser and navigating to homepage&quot;]" />
-    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="[UiPath.UIAutomationNext.Enums.NAppCloseMode.Never]" DisplayName="Edge Amazon.co.uk Low Prices in Electronics," HealingAgentBehavior="Job" sap:VirtualizedContainerService.HintSize="632,292" sap2010:WorkflowViewState.IdRef="NApplicationCard_3" InteractionMode="DebuggerApi" OutUiElement="[Browser_Amazon]" ScopeGuid="7c8eb272-31f2-419e-9d31-f6dcaf05bd44" Version="V2">
+    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="[UiPath.UIAutomationNext.Enums.NAppCloseMode.Never]" DisplayName="Edge Amazon.co.uk Low Prices in Electronics," HealingAgentBehavior="Job" sap:VirtualizedContainerService.HintSize="632,292" sap2010:WorkflowViewState.IdRef="NApplicationCard_3" InteractionMode="DebuggerApi" OpenMode="[UiPath.UIAutomationNext.Enums.NAppOpenMode.IfNotOpen]" OutUiElement="[Browser_Amazon]" ScopeGuid="7c8eb272-31f2-419e-9d31-f6dcaf05bd44" Version="V2">
       <uix:NApplicationCard.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>

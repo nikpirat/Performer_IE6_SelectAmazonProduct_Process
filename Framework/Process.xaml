@@ -1,5 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
+    <x:Property Name="in_TransactionNumber" Type="InArgument(x:Int32)" />
     <x:Property Name="in_Browser" Type="InArgument(ui:Browser)" />
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
@@ -244,131 +245,123 @@
       <AssemblyReference>System.Net.Sockets</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="885.2,2499.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="885.2,2123.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="822.4,2398.4" sap2010:WorkflowViewState.IdRef="CommentOut_2">
-      <ui:CommentOut.Body>
-        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="787.2,2256.8" sap2010:WorkflowViewState.IdRef="Sequence_4">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="753.6,2196.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Default="Success" Name="str_ProcessStatus" />
-              <Variable x:TypeArguments="x:String" Name="str_OutputFilePath" />
-              <Variable x:TypeArguments="scg:List(scg:Dictionary(x:String, x:String))" Name="lst_Products" />
-              <Variable x:TypeArguments="x:String" Name="str_RequestDate" />
-              <Variable x:TypeArguments="x:String" Name="str_Marketplace" />
-              <Variable x:TypeArguments="x:Int32" Default="2" Name="int_MaxPages" />
-              <Variable x:TypeArguments="x:String" Name="str_RequesterEmail" />
-              <Variable x:TypeArguments="x:String" Name="str_RequestID" />
-              <Variable x:TypeArguments="x:String" Name="str_Keyword" />
-              <Variable x:TypeArguments="s:DateTime" Name="dt_StartTime" />
-              <Variable x:TypeArguments="x:Boolean" Name="bln_ResultsFound" />
-            </Sequence.Variables>
+    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="753.6,2022.4" sap2010:WorkflowViewState.IdRef="Sequence_5">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Default="Success" Name="str_ProcessStatus" />
+        <Variable x:TypeArguments="x:String" Name="str_OutputFilePath" />
+        <Variable x:TypeArguments="scg:List(scg:Dictionary(x:String, x:String))" Name="lst_Products" />
+        <Variable x:TypeArguments="x:String" Name="str_RequestDate" />
+        <Variable x:TypeArguments="x:String" Name="str_Marketplace" />
+        <Variable x:TypeArguments="x:Int32" Default="2" Name="int_MaxPages" />
+        <Variable x:TypeArguments="x:String" Name="str_RequesterEmail" />
+        <Variable x:TypeArguments="x:String" Name="str_RequestID" />
+        <Variable x:TypeArguments="x:String" Name="str_Keyword" />
+        <Variable x:TypeArguments="s:DateTime" Name="dt_StartTime" />
+        <Variable x:TypeArguments="x:Boolean" Name="bln_ResultsFound" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:LogMessage DisplayName="Log the start of the transaction processing." sap:VirtualizedContainerService.HintSize="720,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[Process] ===== Starting transaction processing =====&quot;]" />
+      <Assign DisplayName="Record the current date and time as the start time for the transaction." sap:VirtualizedContainerService.HintSize="720,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="s:DateTime">[dt_StartTime]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="s:DateTime">[Date.Now]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to extract transaction data" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Process\\ExtractTransactionData.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_Keyword">[str_Keyword]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_RequestID">[str_RequestID]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_RequesterEmail">[str_RequesterEmail]</OutArgument>
+          <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxPages">[int_MaxPages]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_Marketplace">[str_Marketplace]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_RequestDate">[str_RequestDate]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to validate the extracted transaction data" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Process\\ValidateTransactionData.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxPages">[int_MaxPages]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_RequesterEmail">[str_RequesterEmail]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_RequestID">[str_RequestID]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to search for and validate results" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Process\SearchProduct.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_SearchSuccess">[bln_ResultsFound]</OutArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+          <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to scrape products" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Process\\ScrapeProducts.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+          <OutArgument x:TypeArguments="scg:List(scg:Dictionary(x:String, x:String))" x:Key="out_ProductList">[lst_Products]</OutArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxPages">[int_MaxPages]</InArgument>
+          <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to update an index sheet" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Process\\UpdateIndexSheet.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_FilePath">[str_OutputFilePath]</OutArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_RequestID">[str_RequestID]</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Status">[str_ProcessStatus]</InArgument>
+          <InArgument x:TypeArguments="s:DateTime" x:Key="in_StartTime">[dt_StartTime]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_ProductCount">[lst_Products.Count]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_SheetNumber">[in_TransactionNumber]</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to write the scraped product list to an Excel file" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Process\\WriteResultsToExcel.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_FilePath">[str_OutputFilePath]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_SheetNumber">[in_TransactionNumber]</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_RequestID">[str_RequestID]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+          <InArgument x:TypeArguments="scg:List(scg:Dictionary(x:String, x:String))" x:Key="in_ProductList">[lst_Products]</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="720,337.6" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+        <ui:CommentOut.Body>
+          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="516.8,227.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log the start of the transaction processing." sap:VirtualizedContainerService.HintSize="720,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;[Process] ===== Starting transaction processing =====&quot;]" />
-            <Assign DisplayName="Record the current date and time as the start time for the transaction." sap:VirtualizedContainerService.HintSize="720,174.4" sap2010:WorkflowViewState.IdRef="Assign_1">
-              <Assign.To>
-                <OutArgument x:TypeArguments="s:DateTime">[dt_StartTime]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="s:DateTime">[Date.Now]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to extract transaction data" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Process\\ExtractTransactionData.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to send a completion email to the requester" sap:VirtualizedContainerService.HintSize="483.2,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Process\\SendCompletionEmail.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="out_Keyword">[str_Keyword]</OutArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="out_RequestID">[str_RequestID]</OutArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="out_RequesterEmail">[str_RequesterEmail]</OutArgument>
-                <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxPages">[int_MaxPages]</OutArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="out_Marketplace">[str_Marketplace]</OutArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="out_RequestDate">[str_RequestDate]</OutArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to validate the extracted transaction data" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Process\\ValidateTransactionData.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxPages">[int_MaxPages]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_RequesterEmail">[str_RequesterEmail]</InArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Status">[str_ProcessStatus]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_ProductCount">[lst_Products.Count]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_FilePath">[str_OutputFilePath]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_RequestID">[str_RequestID]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_RequesterEmail">[str_RequesterEmail]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to search for and validate results" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Process\SearchProduct.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_SearchSuccess">[bln_ResultsFound]</OutArgument>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to scrape products" sap:VirtualizedContainerService.HintSize="720,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Process\\ScrapeProducts.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                <OutArgument x:TypeArguments="scg:List(scg:Dictionary(x:String, x:String))" x:Key="out_ProductList">[lst_Products]</OutArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
-                <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxPages">[int_MaxPages]</InArgument>
-                <InArgument x:TypeArguments="ui:Browser" x:Key="in_Browser">[in_Browser]</InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="720,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[lst_Products]" />
-            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="720,689.6" sap2010:WorkflowViewState.IdRef="CommentOut_1">
-              <ui:CommentOut.Body>
-                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="534.4,579.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to write the scraped product list to an Excel file" sap:VirtualizedContainerService.HintSize="500.8,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Process\\WriteResultsToExcel.xaml">
-                    <ui:InvokeWorkflowFile.Arguments>
-                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_RequestID">[str_RequestID]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
-                      <InArgument x:TypeArguments="scg:List(scg:Dictionary(x:String, x:String))" x:Key="in_ProductList">[lst_Products]</InArgument>
-                      <OutArgument x:TypeArguments="x:String" x:Key="out_FilePath">[str_OutputFilePath]</OutArgument>
-                    </ui:InvokeWorkflowFile.Arguments>
-                  </ui:InvokeWorkflowFile>
-                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to update an index sheet" sap:VirtualizedContainerService.HintSize="500.8,176" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Process\\UpdateIndexSheet.xaml">
-                    <ui:InvokeWorkflowFile.Arguments>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_Status">[str_ProcessStatus]</InArgument>
-                      <InArgument x:TypeArguments="s:DateTime" x:Key="in_StartTime">[dt_StartTime]</InArgument>
-                      <InArgument x:TypeArguments="x:Int32" x:Key="in_ProductCount">[lst_Products.Count]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_FilePath">[str_OutputFilePath]</InArgument>
-                    </ui:InvokeWorkflowFile.Arguments>
-                  </ui:InvokeWorkflowFile>
-                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Invoke a sub-workflow to send a completion email to the requester" sap:VirtualizedContainerService.HintSize="500.8,167.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Process\\SendCompletionEmail.xaml">
-                    <ui:InvokeWorkflowFile.Arguments>
-                      <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_Status">[str_ProcessStatus]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_Keyword">[str_Keyword]</InArgument>
-                      <InArgument x:TypeArguments="x:Int32" x:Key="in_ProductCount">[lst_Products.Count]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_FilePath">[str_OutputFilePath]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_RequestID">[str_RequestID]</InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_RequesterEmail">[str_RequesterEmail]</InArgument>
-                    </ui:InvokeWorkflowFile.Arguments>
-                  </ui:InvokeWorkflowFile>
-                </Sequence>
-              </ui:CommentOut.Body>
-            </ui:CommentOut>
-            <ui:LogMessage DisplayName="Log the successful completion of the transaction, including the keyword and the number of products found." sap:VirtualizedContainerService.HintSize="720,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;[Process] ===== Transaction completed successfully. Keyword: &quot; &amp; str_Keyword  &amp; &quot; | Products: &quot; &amp; lst_Products.Count.ToString() &amp; &quot; =====&quot;]" />
           </Sequence>
-        </Sequence>
-      </ui:CommentOut.Body>
-    </ui:CommentOut>
+        </ui:CommentOut.Body>
+      </ui:CommentOut>
+      <ui:LogMessage DisplayName="Log the successful completion of the transaction, including the keyword and the number of products found." sap:VirtualizedContainerService.HintSize="720,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;[Process] ===== Transaction completed successfully. Keyword: &quot; &amp; str_Keyword  &amp; &quot; | Products: &quot; &amp; lst_Products.Count.ToString() &amp; &quot; =====&quot;]" />
+    </Sequence>
   </Sequence>
 </Activity>
