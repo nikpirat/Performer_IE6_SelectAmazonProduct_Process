@@ -257,14 +257,14 @@
       <AssemblyReference>System.Memory.Data</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="SearchProduct" sap:VirtualizedContainerService.HintSize="885.2,3374.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="" DisplayName="SearchProduct" sap:VirtualizedContainerService.HintSize="1068,2574" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="640.8,3320" sap2010:WorkflowViewState.IdRef="Sequence_10">
+    <Sequence sap2010:Annotation.AnnotationText="" sap:VirtualizedContainerService.HintSize="640.6666666666666,2517.3333333333335" sap2010:WorkflowViewState.IdRef="Sequence_10">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Boolean" Name="bln_TypeSuccess" />
         <Variable x:TypeArguments="x:Boolean" Name="bln_ClickSuccess" />
@@ -276,9 +276,9 @@
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log the search keyword." sap:VirtualizedContainerService.HintSize="607.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[String.Format(&quot;[SearchProduct] Searching for: {0}&quot;, in_Keyword)]" />
-      <a:Amazon_SearchBar sap:VirtualizedContainerService.HintSize="607.2,278.4" sap2010:WorkflowViewState.IdRef="Amazon_SearchBar_1" in_Browser="[in_Browser]" in_MaxRetries="[CInt(in_Config(&quot;MaxRetryNumber&quot;))]" in_SearchText="[in_Keyword]" out_Success="[bln_TypeSuccess]" />
-      <If Condition="[Not bln_TypeSuccess]" DisplayName="If typing the keyword into the search bar fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="607.2,576" sap2010:WorkflowViewState.IdRef="If_3">
+      <ui:LogMessage DisplayName="Log the search keyword." sap:VirtualizedContainerService.HintSize="606.6666666666666,188.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[String.Format(&quot;[SearchProduct] Searching for: {0}&quot;, in_Keyword)]" />
+      <a:Amazon_SearchBar sap:VirtualizedContainerService.HintSize="606.6666666666666,303.3333333333333" sap2010:WorkflowViewState.IdRef="Amazon_SearchBar_1" in_Browser="[in_Browser]" in_MaxRetries="[CInt(in_Config(&quot;MaxRetryNumber&quot;))]" in_SearchText="[in_Keyword]" out_Success="[bln_TypeSuccess]" />
+      <If Condition="[Not bln_TypeSuccess]" DisplayName="If typing the keyword into the search bar fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="606.6666666666666,610" sap2010:WorkflowViewState.IdRef="If_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -286,18 +286,18 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="605.6,348" sap2010:WorkflowViewState.IdRef="Sequence_11">
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="604.6666666666666,368.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_11">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log an error message indicating the failure to type the keyword." sap:VirtualizedContainerService.HintSize="572,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;[SearchAndValidateResults] Failed to type keyword into search bar&quot;]" />
-            <Throw DisplayName="Throw an exception to halt the process due to the typing failure." Exception="[New Exception(&quot;Failed to type in Amazon search bar for keyword: &quot; &amp; in_Keyword)]" sap:VirtualizedContainerService.HintSize="572,113.6" sap2010:WorkflowViewState.IdRef="Throw_3" />
+            <ui:LogMessage DisplayName="Log an error message indicating the failure to type the keyword." sap:VirtualizedContainerService.HintSize="570.6666666666666,188.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;[SearchAndValidateResults] Failed to type keyword into search bar&quot;]" />
+            <Throw DisplayName="Throw an exception to halt the process due to the typing failure." Exception="[New Exception(&quot;Failed to type in Amazon search bar for keyword: &quot; &amp; in_Keyword)]" sap:VirtualizedContainerService.HintSize="570.6666666666666,120" sap2010:WorkflowViewState.IdRef="Throw_3" />
           </Sequence>
         </If.Then>
         <If.Else>
-          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="605.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="604.6666666666666,96" sap2010:WorkflowViewState.IdRef="Sequence_12">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -306,49 +306,9 @@
           </Sequence>
         </If.Else>
       </If>
-      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="607.2,964" sap2010:WorkflowViewState.IdRef="CommentOut_1">
-        <ui:CommentOut.Body>
-          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="567.2,853.6" sap2010:WorkflowViewState.IdRef="Sequence_17">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <a:Amazon_ClickSearch sap:VirtualizedContainerService.HintSize="533.6,226.4" sap2010:WorkflowViewState.IdRef="Amazon_ClickSearch_1" in_Browser="[in_Browser]" in_MaxRetries="[CInt(in_Config(&quot;MaxRetryNumber&quot;))]" out_Success="[bln_ClickSuccess]" />
-            <If Condition="[Not bln_ClickSuccess]" DisplayName="If clicking the search button fails, then log an error and throw an exception." sap:VirtualizedContainerService.HintSize="533.6,567.2" sap2010:WorkflowViewState.IdRef="If_4">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="532,348" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log an error message indicating the failure to click the search button." sap:VirtualizedContainerService.HintSize="498.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Error" Message="[&quot;[SearchAndValidateResults] Failed to click search button&quot;]" />
-                  <Throw DisplayName="Throw an exception to halt the process due to the click failure." Exception="[New Exception(&quot;Failed to click Amazon search button&quot;)]" sap:VirtualizedContainerService.HintSize="459.2,113.6" sap2010:WorkflowViewState.IdRef="Throw_4" />
-                </Sequence>
-              </If.Then>
-              <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Sequence>
-              </If.Else>
-            </If>
-          </Sequence>
-        </ui:CommentOut.Body>
-      </ui:CommentOut>
-      <Delay DisplayName="Wait for the search results page to load." Duration="00:00:03" sap:VirtualizedContainerService.HintSize="607.2,122.4" sap2010:WorkflowViewState.IdRef="Delay_3" />
-      <a:Amazon_CheckNoResults sap:VirtualizedContainerService.HintSize="607.2,174.4" sap2010:WorkflowViewState.IdRef="Amazon_CheckNoResults_1" in_Browser="[in_Browser]" out_NoResults="[bln_NoResults]" />
-      <If Condition="[bln_NoResults]" DisplayName="If no results are found, then log a warning and throw a business rule exception." sap:VirtualizedContainerService.HintSize="607.2,576" sap2010:WorkflowViewState.IdRef="If_5">
+      <Delay DisplayName="Wait for the search results page to load." Duration="00:00:03" sap:VirtualizedContainerService.HintSize="606.6666666666666,134.66666666666666" sap2010:WorkflowViewState.IdRef="Delay_3" />
+      <a:Amazon_CheckNoResults sap:VirtualizedContainerService.HintSize="606.6666666666666,187.33333333333334" sap2010:WorkflowViewState.IdRef="Amazon_CheckNoResults_1" in_Browser="[in_Browser]" out_NoResults="[bln_NoResults]" />
+      <If Condition="[bln_NoResults]" DisplayName="If no results are found, then log a warning and throw a business rule exception." sap:VirtualizedContainerService.HintSize="606.6666666666666,610" sap2010:WorkflowViewState.IdRef="If_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -356,18 +316,18 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="544,348" sap2010:WorkflowViewState.IdRef="Sequence_15">
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="543.3333333333334,368.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_15">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log a warning that no results were found for the keyword." sap:VirtualizedContainerService.HintSize="510.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Warn" Message="[String.Format(&quot;[SearchAndValidateResults] No results found for: {0}&quot;, in_Keyword)]" />
-            <Throw DisplayName="Throw a business rule exception because no search results were found." Exception="[New UiPath.Core.BusinessRuleException(&quot;No search results found for keyword: &quot; &amp; in_Keyword)]" sap:VirtualizedContainerService.HintSize="510.4,113.6" sap2010:WorkflowViewState.IdRef="Throw_5" />
+            <ui:LogMessage DisplayName="Log a warning that no results were found for the keyword." sap:VirtualizedContainerService.HintSize="509.3333333333333,188.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Warn" Message="[String.Format(&quot;[SearchAndValidateResults] No results found for: {0}&quot;, in_Keyword)]" />
+            <Throw DisplayName="Throw a business rule exception because no search results were found." Exception="[New UiPath.Core.BusinessRuleException(&quot;No search results found for keyword: &quot; &amp; in_Keyword)]" sap:VirtualizedContainerService.HintSize="509.3333333333333,120" sap2010:WorkflowViewState.IdRef="Throw_5" />
           </Sequence>
         </If.Then>
         <If.Else>
-          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="449.6,89.6" sap2010:WorkflowViewState.IdRef="Sequence_16">
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="543.3333333333334,96" sap2010:WorkflowViewState.IdRef="Sequence_16">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -376,7 +336,7 @@
           </Sequence>
         </If.Else>
       </If>
-      <Assign DisplayName="Assign a variable to indicate that results were found." sap:VirtualizedContainerService.HintSize="607.2,174.4" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign DisplayName="Assign a variable to indicate that results were found." sap:VirtualizedContainerService.HintSize="606.6666666666666,187.33333333333334" sap2010:WorkflowViewState.IdRef="Assign_2">
         <Assign.To>
           <OutArgument x:TypeArguments="x:Boolean">[out_SearchSuccess]</OutArgument>
         </Assign.To>
@@ -384,7 +344,7 @@
           <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
         </Assign.Value>
       </Assign>
-      <ui:LogMessage DisplayName="Log that the search was successful." sap:VirtualizedContainerService.HintSize="607.2,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[String.Format(&quot;[SearchAndValidateResults] Search successful, results found for: {0}&quot;, in_Keyword)]" />
+      <ui:LogMessage DisplayName="Log that the search was successful." sap:VirtualizedContainerService.HintSize="606.6666666666666,179.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[String.Format(&quot;[SearchAndValidateResults] Search successful, results found for: {0}&quot;, in_Keyword)]" />
     </Sequence>
   </Sequence>
 </Activity>
